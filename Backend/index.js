@@ -20,7 +20,14 @@ const app = express()
 // to make input as json
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors({ origin: "https://note-keeper-ui.vercel.app/", credentials: true }))
+// app.use(cors({ origin: ["https://note-keeper-ui.vercel.app/"], credentials: true }))
+
+// Allow requests from your frontend origin
+app.use(cors({
+  origin: 'https://note-keeper-ui.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true // Include credentials if necessary (cookies, etc.)
+}));
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000")
