@@ -1,53 +1,62 @@
-import express from "express"
-import mongoose from "mongoose"
-import dotenv from "dotenv"
-import cookieParser from "cookie-parser"
-import cors from "cors"
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
-dotenv.config()
+dotenv.config();
 
+// Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("Connected to mongoDB")
+    console.log("Connected to MongoDB");
   })
   .catch((err) => {
-    console.log(err)
-  })
+    console.log("MongoDB connection error:", err);
+  });
 
-const app = express()
+const app = express();
 
-// to make input as json
-app.use(express.json())
-app.use(cookieParser())
-// app.use(cors({ origin: ["https://note-keeper-ui.vercel.app/"], credentials: true }))
-
-// Allow requests from your frontend origin
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
-  origin: 'https://note-keeper-ui.vercel.app',
+  origin: 'https://note-keeper-ui.vercel.app', // Allow your frontend origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true // Include credentials if necessary (cookies, etc.)
+  credentials: true, // Allow cookies and credentials
 }));
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000")
-})
+// Handle preflight CORS requests
+app.options('*', cors());
 
-// import routes
-import authRouter from "./routes/auth.route.js"
-import noteRouter from "./routes/note.route.js"
+// Debug incoming requests
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
 
-app.use("/api/auth", authRouter)
-app.use("/api/note", noteRouter)
+// Import and use routes
+import authRouter from "./routes/auth.route.js";
+import noteRouter from "./routes/note.route.js";
 
-// error handling
+app.use("/api/auth", authRouter);
+app.use("/api/note", noteRouter);
+
+// Error handling middleware
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500
-  const message = err.message || "Internal Serer Error"
-
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  console.error(`Error ${statusCode}: ${message}`);
   return res.status(statusCode).json({
     success: false,
     statusCode,
     message,
-  })
-})
+  });
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
