@@ -45,7 +45,7 @@ function Home() {
   // get all notes
   const getAllNotes = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/note/all", {
+      const res = await axios.get("https://note-keeper-server.vercel.app/api/note/all", {
         withCredentials: true,
       });
 
@@ -72,7 +72,7 @@ function Home() {
 
     try {
       const res = await axios.delete(
-        "http://localhost:3000/api/note/delete/" + noteId,
+        "https://note-keeper-server.vercel.app/api/note/delete/" + noteId,
         { withCredentials: true }
       );
 
@@ -91,7 +91,7 @@ function Home() {
   // On Search Note
   const onSearchNote = async (query) => {
     try {
-      const res = await axios.get("http://localhost:3000/api/note/search", {
+      const res = await axios.get("https://note-keeper-server.vercel.app/api/note/search", {
         params: { query },
         withCredentials: true,
       });
@@ -114,7 +114,7 @@ function Home() {
 
     try {
       const res = await axios.put(
-        "http://localhost:3000/api/note/update-note-pinned/" + noteId,
+        "https://note-keeper-server.vercel.app/api/note/update-note-pinned/" + noteId,
         { isPinned: !noteData.isPinned },
         { withCredentials: true }
       )
