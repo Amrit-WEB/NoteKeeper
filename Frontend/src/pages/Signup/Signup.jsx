@@ -16,49 +16,53 @@ const Signup = ({userInfo}) => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+  
     if (!name) {
       setError("Please enter your name");
       return;
     }
-
+  
     if (!validateEmail(email)) {
       setError("Please enter a valid email address");
       return;
     }
-
+  
     if (!password) {
       setError("Please enter the password");
       return;
     }
-
+  
     setError("");
-
-    // sign up api
+  
+    // Sign up API call
     try {
       const res = await axios.post(
         "https://note-keeper-server.vercel.app/api/auth/signup",
         { username: name, email, password },
         { withCredentials: true }
-      )
-
-      if (res.data.success === false) {
-        setError(res.data.message)
-        toast.error(res.data.message)
-        return
+      );
+  
+      // Check if the response was successful
+      if (!res.data || res.data.success === false) {
+        const errorMessage = res.data?.message || "Signup failed. Please try again.";
+        setError(errorMessage);
+        toast.error(errorMessage);
+        return;
       }
-
-      toast.success(res.data.message)
-      setError("")
-
-      navigate("/login")
-
+  
+      // Show success toast and navigate to login
+      toast.success(res.data.message);
+      setError("");
+      navigate("/login");
     } catch (error) {
-      toast.error(error.message)
-      console.log(error.message)
-      setError(error.message)
+      // Log detailed error and show appropriate message
+      console.error("Signup error:", error.response || error.message || error);
+      const errorMsg = error.response?.data?.message || "An unexpected error occurred. Please try again.";
+      toast.error(errorMsg);
+      setError(errorMsg);
     }
-  }
+  };
+  
 
   
   return (
