@@ -164,5 +164,4 @@ Make sure both the frontend and backend servers are running simultaneously:
 - Enhance security with more robust validation and error handling.
 
 ---
-        ***
----
+
