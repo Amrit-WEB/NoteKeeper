@@ -1,5 +1,5 @@
 # NoteKeeper
----
+
 NoteKeeper is a modern, full-stack note management application designed for users to create, edit, and organize their notes effortlessly. This project implements a complete user authentication system, secure RESTful APIs, and a responsive frontend UI.
 
 ## 🚀 Live Demo
