@@ -35,7 +35,7 @@ function Login() {
     try {
       dispatch(signInStart())
       const res = await axios.post(
-        "https://note-keeper-server.vercel.app/api/auth/signin",
+        "https://notekeeper-l0ak.onrender.com/api/auth/signin",
         { email, password },
         { withCredentials: true }
       )

@@ -29,7 +29,7 @@ function Navbar({userInfo, onSearchNote, handleClearSearch}) {
     try {
       dispatch(signInStart())
 
-      const res = await axios.get("https://note-keeper-server.vercel.app/api/auth/signout", {withCredentials:true,})
+      const res = await axios.get("https://notekeeper-l0ak.onrender.com/api/auth/signout", {withCredentials:true,})
 
       if(res.data.success === false){
         dispatch(signoutFailure(res.data.message))

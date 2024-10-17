@@ -37,7 +37,7 @@ const Signup = ({userInfo}) => {
     // Sign up API call
     try {
       const res = await axios.post(
-        "https://note-keeper-server.vercel.app/api/auth/signup",
+        "https://notekeeper-l0ak.onrender.com/api/auth/signup",
         { username: name, email, password },
         { withCredentials: true }
       );

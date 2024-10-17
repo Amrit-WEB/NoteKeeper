@@ -101,14 +101,14 @@ The frontend is developed using **React.js** along with **Redux** for state mana
    npm start
    ```
 
-   The frontend will run on `http://localhost:3000`.
+   The frontend will run on `https://notekeeper-l0ak.onrender.com`.
 
 ### Running the Project Locally
 
 Make sure both the frontend and backend servers are running simultaneously:
 
 - Backend: `http://localhost:5000`
-- Frontend: `http://localhost:3000`
+- Frontend: `https://notekeeper-l0ak.onrender.com`
 
 ## 🛠️ Technologies Used
 
