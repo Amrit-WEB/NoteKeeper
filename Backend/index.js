@@ -22,11 +22,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-<<<<<<< HEAD
   origin: 'https://note-keeper-ui.vercel.app/', // Allow your frontend origin
-=======
-  origin: 'https://note-keeper-ui.vercel.app/*', // Allow your frontend origin
->>>>>>> 75c2aefc597a35a43ce592bb64a7864b1da5fc65
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true, // Allow cookies and credentials
 }));
