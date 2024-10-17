@@ -17,26 +17,10 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-<<<<<<< HEAD
 app.use(
   cors({
     origin: process.env.FRONTEND_URL, // Allow your frontend origin
     methods: ["GET", "POST", "PUT", "DELETE"],
-=======
-
-// CORS Configuration
-const allowedOrigins = ['https://note-keeper-ui.vercel.app']; // Add more origins if needed
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
->>>>>>> 772392232c35fecaf980a52f144bdeff9b6d7c2a
     credentials: true, // Allow cookies and credentials
   })
 );
@@ -74,19 +58,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import express from "express";
 // import mongoose from "mongoose";
