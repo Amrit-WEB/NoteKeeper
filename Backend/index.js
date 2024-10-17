@@ -21,14 +21,16 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-  origin: 'https://note-keeper-ui.vercel.app/', // Allow your frontend origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Allow cookies and credentials
-}));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL, // Allow your frontend origin
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Allow cookies and credentials
+  })
+);
 
 // Handle preflight CORS requests
-app.options('*', cors());
+app.options("*", cors());
 
 // Debug incoming requests
 app.use((req, res, next) => {

@@ -10,6 +10,8 @@ import EmptyCard from "../../components/EmptyCard/EmptyCard";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 // Set the main app element to ensure accessibility
 // Modal.setAppElement('#root');
 
@@ -45,7 +47,7 @@ function Home() {
   // get all notes
   const getAllNotes = async () => {
     try {
-      const res = await axios.get("https://notekeeper-l0ak.onrender.com/api/note/all", {
+      const res = await axios.get(`${apiUrl}/api/note/all`, {
         withCredentials: true,
       });
 
@@ -71,10 +73,9 @@ function Home() {
     const noteId = data._id;
 
     try {
-      const res = await axios.delete(
-        "https://notekeeper-l0ak.onrender.com/api/note/delete/" + noteId,
-        { withCredentials: true }
-      );
+      const res = await axios.delete(`${apiUrl}/api/note/delete/` + noteId, {
+        withCredentials: true,
+      });
 
       if (res.data.success === false) {
         toast.error(res.data.message);
@@ -91,7 +92,7 @@ function Home() {
   // On Search Note
   const onSearchNote = async (query) => {
     try {
-      const res = await axios.get("https://notekeeper-l0ak.onrender.com/api/note/search", {
+      const res = await axios.get(`${apiUrl}/api/note/search`, {
         params: { query },
         withCredentials: true,
       });
@@ -110,28 +111,27 @@ function Home() {
   };
   // Update Is Pinned
   const updateIsPinned = async (noteData) => {
-    const noteId = noteData._id
+    const noteId = noteData._id;
 
     try {
       const res = await axios.put(
-        "https://notekeeper-l0ak.onrender.com/api/note/update-note-pinned/" + noteId,
+        `${apiUrl}/api/note/update-note-pinned/` + noteId,
         { isPinned: !noteData.isPinned },
         { withCredentials: true }
-      )
+      );
 
       if (res.data.success === false) {
-        toast.error(res.data.message)
-        console.log(res.data.message)
-        return
+        toast.error(res.data.message);
+        console.log(res.data.message);
+        return;
       }
 
-      toast.success(res.data.message)
-      getAllNotes()
+      toast.success(res.data.message);
+      getAllNotes();
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
-
+  };
 
   const handleClearSearch = () => {
     setIsSearch(false);

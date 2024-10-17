@@ -1,20 +1,26 @@
 import React from "react";
 import { useState } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PasswordInputs from "../../components/Inputs/PasswordInput";
 import { validateEmail } from "../../utils/helper";
-import {useDispatch} from "react-redux"
-import { signInFailure,signInSuccess, signInStart } from "../../redux/user/userSlice";
-import axios from "axios"
-import { toast } from "react-toastify"
+import { useDispatch } from "react-redux";
+import {
+  signInFailure,
+  signInSuccess,
+  signInStart,
+} from "../../redux/user/userSlice";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -33,27 +39,26 @@ function Login() {
 
     //Login API
     try {
-      dispatch(signInStart())
+      dispatch(signInStart());
       const res = await axios.post(
-        "https://notekeeper-l0ak.onrender.com/api/auth/signin",
+        `${apiUrl}/api/auth/signin`,
         { email, password },
         { withCredentials: true }
-      )
+      );
 
       if (res.data.success === false) {
-        toast.error(res.data.message)
-        console.log(res.data)
-        dispatch(signInFailure(data.message))
+        toast.error(res.data.message);
+        console.log(res.data);
+        dispatch(signInFailure(data.message));
       }
 
-      toast.success(res.data.message)
-      dispatch(signInSuccess(res.data))
-      navigate("/")
-      
+      toast.success(res.data.message);
+      dispatch(signInSuccess(res.data));
+      navigate("/");
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
       console.log(error);
-      dispatch(signInFailure(error.message))
+      dispatch(signInFailure(error.message));
     }
   };
 

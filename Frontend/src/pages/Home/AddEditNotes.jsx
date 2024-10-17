@@ -4,14 +4,14 @@ import TagInput from "../../components/Inputs/TagInput";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function AddEditNotes({ onClose, noteData, type, getAllNotes }) {
+const apiUrl = import.meta.env.VITE_API_URL;
 
+function AddEditNotes({ onClose, noteData, type, getAllNotes }) {
   const [title, setTitle] = useState(noteData?.title || "");
   const [content, setContent] = useState(noteData?.content || "");
   const [tags, setTags] = useState(noteData?.tags || []);
   const [error, setError] = useState(null);
 
-  
   //   Edit Note
   const editNote = async () => {
     const noteId = noteData._id;
@@ -19,7 +19,7 @@ function AddEditNotes({ onClose, noteData, type, getAllNotes }) {
 
     try {
       const res = await axios.post(
-        "https://notekeeper-l0ak.onrender.com/api/note/edit/" + noteId,
+        `${apiUrl}/api/note/edit/` + noteId,
         { title, content, tags },
         { withCredentials: true }
       );
@@ -47,7 +47,7 @@ function AddEditNotes({ onClose, noteData, type, getAllNotes }) {
   const addNewNote = async () => {
     try {
       const res = await axios.post(
-        "https://notekeeper-l0ak.onrender.com/api/note/add",
+        `${apiUrl}/api/note/add`,
         { title, content, tags },
         { withCredentials: true }
       );
@@ -62,7 +62,6 @@ function AddEditNotes({ onClose, noteData, type, getAllNotes }) {
       toast.success(res.data.message);
       getAllNotes();
       onClose();
-      
     } catch (error) {
       toast.error(error.message);
       console.log(error.message);
